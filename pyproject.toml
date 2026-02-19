@@ -1,0 +1,55 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "saastesa"
+version = "0.1.0"
+description = "Threat Environment Situational Awareness tool for SaaS engineering organizations"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "SaaS TESA Team" }]
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn>=0.30.0",
+  "httpx>=0.27.0",
+  "pydantic>=2.8.0",
+  "sqlalchemy>=2.0.35",
+  "psycopg[binary]>=3.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2.0",
+  "ruff>=0.6.0",
+  "mypy>=1.11.0",
+]
+
+[project.scripts]
+saastesa = "saastesa.cli:main"
+saastesa-api = "saastesa.api.main:serve"
+saastesa-agent = "saastesa.agent.runner:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/saastesa"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_any_generics = true
+no_implicit_optional = true
+check_untyped_defs = true
