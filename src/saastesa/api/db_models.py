@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from sqlalchemy import DateTime, Integer, JSON, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
@@ -34,5 +33,5 @@ class SecurityFindingRecord(Base):
     resource_type: Mapped[str] = mapped_column(String(128))
     resource_platform: Mapped[str] = mapped_column(String(128))
 
-    references_json: Mapped[dict] = mapped_column(JSON)
-    raw_data: Mapped[dict] = mapped_column(JSON)
+    references_json: Mapped[dict[str, object]] = mapped_column(JSON)
+    raw_data: Mapped[dict[str, object]] = mapped_column(JSON)

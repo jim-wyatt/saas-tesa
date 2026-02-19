@@ -12,10 +12,16 @@ jobs:
     name: Deploy Preview
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - vercel_token_secret: VERCEL_TOKEN
+            vercel_org_id_secret: VERCEL_ORG_ID
+            vercel_project_id_secret: VERCEL_PROJECT_ID
     env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets[matrix.vercel_token_secret] }}
+      VERCEL_ORG_ID: ${{ secrets[matrix.vercel_org_id_secret] }}
+      VERCEL_PROJECT_ID: ${{ secrets[matrix.vercel_project_id_secret] }}
 
     steps:
       - name: Checkout
@@ -42,10 +48,16 @@ jobs:
     name: Deploy Production
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - vercel_token_secret: VERCEL_TOKEN
+            vercel_org_id_secret: VERCEL_ORG_ID
+            vercel_project_id_secret: VERCEL_PROJECT_ID
     env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets[matrix.vercel_token_secret] }}
+      VERCEL_ORG_ID: ${{ secrets[matrix.vercel_org_id_secret] }}
+      VERCEL_PROJECT_ID: ${{ secrets[matrix.vercel_project_id_secret] }}
 
     steps:
       - name: Checkout
