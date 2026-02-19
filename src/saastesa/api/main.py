@@ -1,5 +1,6 @@
 from collections.abc import Iterable
 import os
+from urllib.parse import urlsplit
 from typing import Any
 
 from fastapi import FastAPI, Query
@@ -121,9 +122,11 @@ def create_app(database_url: str | None = None) -> FastAPI:
         allow_headers=["*"],
     )
 
+    db_engine = _database_engine_name(effective_database_url)
+
     @app.get("/health")
     def health() -> dict[str, Any]:
-        return {"status": "ok", "database": effective_database_url}
+        return {"status": "ok", "database_engine": db_engine}
 
     @app.post("/api/v1/signals", response_model=IngestSignalsResponse)
     def ingest_signals(request: IngestSignalsRequest) -> IngestSignalsResponse:
@@ -156,6 +159,15 @@ def create_app(database_url: str | None = None) -> FastAPI:
         return FindingsSummaryOut(**store.summary())
 
     return app
+
+
+def _database_engine_name(database_url: str) -> str:
+    scheme = urlsplit(database_url).scheme.lower()
+    if scheme.startswith("sqlite"):
+        return "sqlite"
+    if "postgres" in scheme:
+        return "postgresql"
+    return scheme or "unknown"
 
 
 app = create_app()

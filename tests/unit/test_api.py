@@ -11,7 +11,7 @@ def test_health_endpoint() -> None:
 
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
-    assert "database" in response.json()
+    assert response.json()["database_engine"] in {"sqlite", "postgresql"}
 
 
 def test_ingest_and_query_endpoints() -> None:
