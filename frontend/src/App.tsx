@@ -1,5 +1,5 @@
 import { DarkMode, LightMode } from "@mui/icons-material";
-import { Alert, Box, CircularProgress, Container, Grid2 as Grid, IconButton, Stack, Typography } from "@mui/material";
+import { Alert, Box, CircularProgress, Container, Grid, IconButton, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
