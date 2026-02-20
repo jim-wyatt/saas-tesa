@@ -1,0 +1,31 @@
+@startuml
+title SaaS TESA - Component Diagram
+
+skinparam componentStyle rectangle
+
+actor "Security Engineer" as user
+
+package "Client/Edge" {
+  [Distributed Agent\n(src/saastesa/agent)] as agent
+  [Dashboard UI\n(frontend)] as frontend
+}
+
+package "Backend" {
+  [FastAPI Service\n(src/saastesa/api/main.py)] as api
+  [Analysis Pipeline\n(src/saastesa/pipelines)] as pipeline
+  [Risk Scoring\n(src/saastesa/core/risk_scoring.py)] as scoring
+  [SQLAlchemy Repository\n(src/saastesa/api/repository.py)] as repo
+}
+
+database "Relational DB\n(SQLite/PostgreSQL)" as db
+
+user --> frontend : views summaries/findings
+frontend --> api : GET /api/v1/summary\nGET /api/v1/findings
+
+agent --> api : POST /api/v1/signals
+api --> pipeline : analyze_signals(signals)
+pipeline --> scoring : build_finding(signal)
+api --> repo : add/findings/list/summary
+repo --> db : ORM read/write
+
+@enduml

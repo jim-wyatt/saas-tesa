@@ -1,0 +1,78 @@
+@startuml
+title SaaS TESA - Domain Class Diagram
+
+hide empty methods
+skinparam classAttributeIconSize 0
+
+package "Core Domain" {
+  class ThreatSignal {
+    +source: str
+    +signal_type: str
+    +severity: int
+    +detected_at: datetime
+    +metadata: dict
+  }
+
+  class SecurityFinding {
+    +finding_uid: str
+    +standard: FindingStandard
+    +schema_version: FindingSchemaVersion
+    +status: FindingStatus
+    +severity_id: int
+    +severity: FindingSeverity
+    +risk_score: int
+    +title: str
+    +description: str
+    +category_name: str
+    +class_name: FindingClass
+    +type_name: str
+    +domain: FindingDomain
+    +activity_name: FindingActivity
+    +time: datetime
+    +source: str
+    +raw_data: dict
+  }
+
+  class FindingResource {
+    +uid: str
+    +name: str
+    +type: str
+    +platform: str
+  }
+
+  class FindingReferences {
+    +cve: tuple[str]
+    +cwe: tuple[str]
+    +owasp: tuple[str]
+    +mitre_attack: tuple[str]
+  }
+
+  SecurityFinding *-- FindingResource : resource
+  SecurityFinding *-- FindingReferences : references
+}
+
+package "API DTOs" {
+  class ThreatSignalIn
+  class SecurityFindingOut
+  class IngestSignalsRequest
+  class IngestSignalsResponse
+  class FindingsSummaryOut
+
+  IngestSignalsRequest *-- ThreatSignalIn : signals
+  IngestSignalsResponse *-- SecurityFindingOut : findings
+}
+
+package "Persistence (SQLAlchemy)" {
+  class FindingResourceRecord
+  class SecurityFindingRecord
+  class FindingReferenceItemRecord
+
+  SecurityFindingRecord --> FindingResourceRecord : resource_id
+  SecurityFindingRecord *-- "0..*" FindingReferenceItemRecord : reference_items
+}
+
+ThreatSignalIn ..> ThreatSignal : mapped to
+SecurityFinding ..> SecurityFindingOut : mapped to/from
+SecurityFinding ..> SecurityFindingRecord : persisted as
+
+@enduml
