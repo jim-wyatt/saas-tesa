@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { CssBaseline, PaletteMode, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 
 import App from "./App";
 import { buildTheme } from "./theme";
@@ -27,6 +28,7 @@ function Root() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Analytics />
       <QueryClientProvider client={queryClient}>
         <App mode={mode} onToggleTheme={toggleTheme} />
       </QueryClientProvider>
