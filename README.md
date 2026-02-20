@@ -153,6 +153,8 @@ SaaS TESA now stores and serves findings using an **OCSF-aligned** normalized mo
 
 See [docs/finding-model.md](docs/finding-model.md).
 
+Architecture UML diagrams (PlantUML): [docs/uml/README.md](docs/uml/README.md)
+
 ## Monorepo layout
 
 - `src/saastesa/api/` FastAPI app and schemas

@@ -40,3 +40,12 @@ Persistence is environment-aware:
 - Add authn/authz (OIDC/JWT)
 - Add event streaming path for high-volume ingestion
 - Add tenant-aware data partitioning and RBAC
+
+## UML diagrams
+
+PlantUML source files for the architecture are available in [uml/README.md](uml/README.md), including:
+
+- Component diagram
+- Domain class diagram
+- Ingestion sequence diagram
+- Deployment diagram

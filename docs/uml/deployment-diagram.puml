@@ -1,0 +1,39 @@
+@startuml
+title SaaS TESA - Deployment Diagram
+
+skinparam shadowing false
+
+node "Engineer Workstation" {
+  node "Python Runtime" {
+    artifact "saastesa-api\n(Uvicorn/FastAPI)" as local_api
+    artifact "saastesa-agent" as local_agent
+  }
+
+  node "Browser" {
+    artifact "Vite Dev Server\n(frontend)" as local_ui
+  }
+
+  database "SQLite\n(saastesa.db)" as local_db
+}
+
+cloud "Vercel" {
+  node "Static Hosting" {
+    artifact "Dashboard (frontend/dist)" as vercel_ui
+  }
+  node "Python Serverless Function" {
+    artifact "api/index.py -> FastAPI app" as vercel_api
+  }
+}
+
+cloud "Neon" {
+  database "PostgreSQL" as neon_db
+}
+
+local_ui --> local_api : /api/v1/*
+local_agent --> local_api : /api/v1/signals
+local_api --> local_db : SQLAlchemy
+
+vercel_ui --> vercel_api : rewrite /api/*
+vercel_api --> neon_db : TESA_DATABASE_URL
+
+@enduml
