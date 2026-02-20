@@ -10,7 +10,7 @@ type Props = {
   findings: SecurityFinding[];
 };
 
-export function SummaryCards({ summary, findings }: Props): JSX.Element {
+export function SummaryCards({ summary, findings }: Props) {
   const metrics = executiveMetrics(summary, findings);
   const items = [
     { label: "Total Findings", value: metrics.totalFindings, tone: "primary" as const },

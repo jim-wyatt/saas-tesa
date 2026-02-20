@@ -9,7 +9,7 @@ type Props = {
   findings: SecurityFinding[];
 };
 
-export function SourceChart({ findings }: Props): JSX.Element {
+export function SourceChart({ findings }: Props) {
   const theme = useTheme();
   const data = countBySource(findings);
 

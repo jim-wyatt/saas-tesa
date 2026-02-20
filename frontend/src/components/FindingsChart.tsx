@@ -8,7 +8,7 @@ type Props = {
   summary: FindingsSummary;
 };
 
-export function FindingsChart({ summary }: Props): JSX.Element {
+export function FindingsChart({ summary }: Props) {
   const theme = useTheme();
   const data = [
     { severity: "Low", count: summary.low, color: theme.palette.success.main },

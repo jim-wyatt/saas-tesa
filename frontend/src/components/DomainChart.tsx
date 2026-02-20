@@ -9,7 +9,7 @@ type Props = {
   findings: SecurityFinding[];
 };
 
-export function DomainChart({ findings }: Props): JSX.Element {
+export function DomainChart({ findings }: Props) {
   const theme = useTheme();
   const data = countByDomain(findings);
 
