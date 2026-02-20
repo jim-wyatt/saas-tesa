@@ -1,4 +1,4 @@
-import { Grid2 as Grid, Paper, Typography } from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 
 import { executiveMetrics } from "../lib/insights";
