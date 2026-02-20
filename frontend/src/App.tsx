@@ -18,7 +18,7 @@ type Props = {
   onToggleTheme: () => void;
 };
 
-export default function App({ mode, onToggleTheme }: Props): JSX.Element {
+export default function App({ mode, onToggleTheme }: Props) {
   const [loadingWarning, setLoadingWarning] = useState(false);
 
   const {

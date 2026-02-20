@@ -9,7 +9,7 @@ type Props = {
   findings: SecurityFinding[];
 };
 
-export function TrendChart({ findings }: Props): JSX.Element {
+export function TrendChart({ findings }: Props) {
   const theme = useTheme();
   const data = findingsTrend(findings, 14);
 

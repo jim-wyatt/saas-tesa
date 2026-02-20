@@ -29,7 +29,7 @@ const columns: GridColDef<SecurityFinding>[] = [
   { field: "description", headerName: "Description", flex: 1.8, minWidth: 260 },
 ];
 
-export function FindingsTable({ findings }: Props): JSX.Element {
+export function FindingsTable({ findings }: Props) {
   const rows = findings.map((finding, index) => ({ id: `${finding.title}-${index}`, ...finding }));
 
   return (

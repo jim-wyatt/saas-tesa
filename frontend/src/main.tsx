@@ -8,7 +8,7 @@ import { buildTheme } from "./theme";
 
 const queryClient = new QueryClient();
 
-function Root(): JSX.Element {
+function Root() {
   const [mode, setMode] = React.useState<PaletteMode>(() => {
     const saved = window.localStorage.getItem("saastesa-theme-mode");
     return saved === "dark" ? "dark" : "light";
