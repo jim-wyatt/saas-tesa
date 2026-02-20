@@ -1,0 +1,33 @@
+@startuml
+title SaaS TESA - Signal Ingestion Sequence
+
+actor "Agent Runner" as runner
+participant "MockThreatSignalProvider" as provider
+participant "TESAApiClient" as sdk
+participant "FastAPI /api/v1/signals" as api
+participant "analyze_signals()" as analyze
+participant "build_finding()" as score
+participant "SQLAlchemyFindingStore" as store
+database "SQLite/PostgreSQL" as db
+
+runner -> provider : fetch_signals()
+provider --> runner : list[ThreatSignal]
+
+runner -> sdk : send_signals(signals)
+sdk -> api : POST /api/v1/signals
+api -> analyze : analyze_signals(signals)
+
+loop each signal
+  analyze -> score : build_finding(signal)
+  score --> analyze : SecurityFinding
+end
+
+analyze --> api : list[SecurityFinding]
+api -> store : add(findings)
+store -> db : upsert resources/findings/references
+db --> store : commit
+store --> api : ok
+api --> sdk : IngestSignalsResponse
+sdk --> runner : { ingested, findings }
+
+@enduml
