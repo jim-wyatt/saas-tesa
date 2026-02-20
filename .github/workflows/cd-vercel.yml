@@ -45,7 +45,9 @@ jobs:
         run: vercel build --token="$VERCEL_TOKEN"
 
       - name: Deploy Preview to Vercel
-        run: vercel deploy --prebuilt --token="$VERCEL_TOKEN"
+        run: |
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --no-wait --token="$VERCEL_TOKEN")
+          echo "Preview deployment created: $DEPLOYMENT_URL"
 
   deploy-production:
     name: Deploy Production
@@ -84,4 +86,6 @@ jobs:
         run: vercel build --prod --token="$VERCEL_TOKEN"
 
       - name: Deploy Production to Vercel
-        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+        run: |
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --prod --no-wait --token="$VERCEL_TOKEN")
+          echo "Production deployment created: $DEPLOYMENT_URL"
