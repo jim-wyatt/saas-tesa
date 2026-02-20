@@ -4,6 +4,7 @@ import { alpha } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import { API_BASE_URL, getFindings, getSummary } from "./api";
 import { DomainChart } from "./components/DomainChart";
@@ -133,6 +134,7 @@ export default function App({ mode, onToggleTheme }: Props) {
         </Grid>
       </Grid>
       <Analytics />
+      <SpeedInsights />
     </Container>
   );
 }
